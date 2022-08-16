@@ -1,6 +1,6 @@
-from GROUP1.Pages.base_page import BasePage
-from GROUP1.Locators.locators import CartPageLocs
-from GROUP1.Locators.locators import DuckPageLocs
+from group1.pages.base_page import BasePage
+from group1.locators.locators import CartPageLocs
+from group1.locators.locators import DuckPageLocs
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select

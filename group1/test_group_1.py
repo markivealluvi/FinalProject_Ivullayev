@@ -3,10 +3,10 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
-from GROUP1.Pages.main_page import MainPage
-from GROUP1.Pages.duck_page import DuckPage
-from GROUP1.Pages.cart_page import CartPage
-from GROUP1.api_petstore import PetStoreApi
+from pages.main_page import MainPage
+from pages.duck_page import DuckPage
+from pages.cart_page import CartPage
+from api_petstore import PetStoreApi
 
 
 @pytest.fixture()
