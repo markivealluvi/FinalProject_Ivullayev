@@ -6,7 +6,10 @@ from selenium.webdriver.chrome.service import Service
 from pages.main_page import MainPage
 from pages.duck_page import DuckPage
 from pages.cart_page import CartPage
+from locators.locators import CartPageLocs
+from pages.edit_page import EditPage
 from api_petstore import PetStoreApi
+import time
 
 
 @pytest.fixture()
@@ -58,13 +61,11 @@ def test_tc_2(open_browser):
         cart_page = CartPage(open_browser, open_browser.current_url)
         cart_page.verify_it_is_cart_page()
     with allure.step('Verify the quantity and cost of product'):
-        cart_page.verify_quantity_of_ducks()
-        cart_page.verify_cost_of_ducks()
-    with allure.step('Input credentials'):
-        cart_page.credentials_input()
+        cart_page.verify_cost_and_quantity()
+    with allure.step('Confirm order'):
         cart_page.confirm_order()
         cart_page.order_success()
-    with allure.step('Verify the order is made'):
+    with allure.step('Verify the order is made in database'):
         cart_page.verify_db_order()
 
 
@@ -77,3 +78,64 @@ def test_api():
         PetStoreApi.delete_pet()
     with allure.step('Verify the pet is deleted'):
         PetStoreApi.verify_pet_deleted()
+
+
+def test_gr2_tc_1(open_browser):
+
+    url = 'http://localhost/litecart/'
+    with allure.step('Open application'):
+        main_page = MainPage(open_browser, url)
+        main_page.open()
+    with allure.step('Log in'):
+        main_page.login_to_site()
+    with allure.step('Open account edit page'):
+        main_page.open_edit_page()
+    with allure.step('Verify it is edit page'):
+        edit_page = EditPage(open_browser, open_browser.current_url)
+        edit_page.verify_it_is_edit_page()
+    with allure.step('Edit first name of account'):
+        edit_page.edit_first_name()
+    with allure.step('Click save button'):
+        edit_page.save_all()
+    with allure.step('Verify name has changed in database'):
+        edit_page.verify_db_name_change()
+
+
+def test_gr2_tc_2(open_browser):
+    url = 'http://localhost/litecart/'
+    main_page = MainPage(open_browser, url)
+    main_page.open()
+    with allure.step('Choose yellow duck'):
+        main_page.open_duck_page()
+    with allure.step('Verify it is the yellow duck page'):
+        duck_page = DuckPage(open_browser, open_browser.current_url)
+        duck_page.verify_it_is_duck_page()
+    with allure.step('Select size of duck'):
+        duck_page.select_size()
+    with allure.step('Add the product to cart'):
+        duck_page.add_duck_to_cart()
+    with allure.step('Open the cart page'):
+        duck_page.open_cart_page()
+    with allure.step('Change ducks quantity'):
+        cart_page = CartPage(open_browser, open_browser.current_url)
+        cart_page.change_duck_quantity()
+    with allure.step('Verify the quantity and total sum of cart'):
+        cart_page.verify_quantity_and_sum()
+    with allure.step('Remove ducks from cart'):
+        cart_page.remove_ducks()
+    with allure.step('Verify the cart is empty'):
+        cart_page.verify_ducks_were_removed()
+
+
+def test_api2():
+    with allure.step('Add new user'):
+        PetStoreApi.create_user()
+    with allure.step('Get new users data'):
+        PetStoreApi.get_user_data()
+    with allure.step('Update username'):
+        PetStoreApi.update_username()
+    with allure.step('Verify username has changed'):
+        PetStoreApi.verify_username_changed()
+
+
+

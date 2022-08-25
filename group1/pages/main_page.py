@@ -43,10 +43,18 @@ class MainPage(BasePage):
                                                              (MainPageLocs.password_input_loc))
         password_input.send_keys(MainPageLocs.password)
         login_button = WebDriverWait(self.chrome, 5).until(EC.element_to_be_clickable
-                                                           (MainPageLocs.login_input_loc))
+                                                           (MainPageLocs.login_button_loc))
         login_button.click()
 
+    def open_cart_page(self):
+        cart_link = WebDriverWait(self.chrome, 10).until(EC.presence_of_element_located(MainPageLocs.cart_page_loc))
+        cart_link.click()
+
     def open_duck_page(self):
-        purple_duck = WebDriverWait(self.chrome, 5).until(EC.presence_of_element_located
+        yellow_duck = WebDriverWait(self.chrome, 5).until(EC.presence_of_element_located
                                                           (MainPageLocs.yellow_duck_loc))
-        purple_duck.click()
+        yellow_duck.click()
+
+    def open_edit_page(self):
+        edit_acc = WebDriverWait(self.chrome, 20).until(EC.element_to_be_clickable(MainPageLocs.edit_acc_loc))
+        edit_acc.click()
