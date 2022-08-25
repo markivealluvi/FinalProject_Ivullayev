@@ -48,7 +48,7 @@ def test_adding_to_cart_and_verifying_order_is_made_in_db(open_browser):
         duck_page = DuckPage(open_browser, open_browser.current_url)
         duck_page.verify_it_is_duck_page()
     with allure.step('Choose quantity of duck'):
-        duck_page.choose_quantity(2)
+        duck_page.choose_quantity('2')
     with allure.step('Select size of duck'):
         duck_page.select_size()
     with allure.step('Add the product to cart'):
