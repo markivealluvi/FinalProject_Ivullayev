@@ -2,7 +2,7 @@ from group1.pages.base_page import BasePage
 from group1.locators.locators import EditPageLocs
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import mysql.connector as mysql
+from group1.sql_helper import MySQL
 
 
 class EditPage(BasePage):
@@ -24,15 +24,11 @@ class EditPage(BasePage):
     @staticmethod
     def verify_db_name_change():
 
-        db = mysql.connect(host="127.0.0.1",
-                           user="root",
-                           passwd="",
-                           database="litecart")
-        cursor = db.cursor()
-        query = "SELECT firstname FROM `lc_customers`"
-        cursor.execute(query)
-        firstname = cursor.fetchall()
+        db = MySQL.create_connection()
+        query = MySQL.query_customers
+        result = MySQL.execute_read_query(db, query)
         firstnames = []
-        for element in firstname:
+        for element in result:
             firstnames.append(element[0])
         assert 'Erling' in firstnames
+        MySQL.close_db(db)

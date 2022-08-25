@@ -1,0 +1,3 @@
+
+Connection to MySQL DB successful
+Database closed

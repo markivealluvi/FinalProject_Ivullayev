@@ -1,0 +1,4 @@
+
+2 36 18 36 2
+Connection to MySQL DB successful
+Database closed
